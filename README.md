@@ -33,7 +33,6 @@ Employee Docs (Raj, Amit, Anjali)
 .
 ├── 1_insert_to_supabase.py      # Insert 3 employees to Supabase
 ├── 2_langgraph_groq_agent.py    # AI Agent with user prompt loop
-├── requirements.txt
 └── README.md
 ```
 
