@@ -8,7 +8,7 @@ from langchain_core.documents import Document
 
 # 2. PASTE YOUR SESSION POOLER URI HERE - must be pooler.supabase.com, not db.supabase.co
 # Add +psycopg and ?sslmode=require at end
-DB_URI = "postgresql://postgres.cmnxmuobhzlldxuebowh:kHiNL60uC7VUQrlF@aws-0-ap-south-1.pooler.supabase.com:5432/postgres"
+DB_URI = "postgresql://postgres.XXXXXXXXXXXXXXXXX.supabase.com:5432/postgres"
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
