@@ -132,7 +132,7 @@ with PostgresSaver.from_conn_string(POOLER_URI) as checkpointer:
 4. **FAISS vs pgvector**
    FAISS = file on laptop, lost on restart. pgvector = permanent in Postgres cloud.
 
-## What I Learned
+## Learning Key Points
 - How to enable pgvector with `CREATE EXTENSION vector`
 - Difference between Supabase Direct vs Pooler for Colab
 - How to store embeddings and metadata in `langchain_pg_embedding`
