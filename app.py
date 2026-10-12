@@ -13,8 +13,8 @@ from langchain_postgres import PGVector
 
 # load_dotenv()
 
-DATABASE_URL = f"postgresql://postgres.cmnxmuobhzlldxuebowh:kHiNL60uC7VUQrlF@aws-0-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require"
-GROQ_API_KEY = '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'
+DATABASE_URL = f"postgresql://postgres.xxxxxxxxxxxxxxxxxxxxxxxx/postgres?sslmode=require"
+GROQ_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 API_KEY = os.getenv("API_KEY", "mysecretkey123")
 
 VECTOR_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://")
