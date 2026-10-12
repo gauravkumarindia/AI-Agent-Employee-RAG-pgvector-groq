@@ -1,4 +1,4 @@
-# Employee RAG with Postgres pgvector + LangChain + LangGraph + Groq
+# AI Agent: Employee RAG with Postgres pgvector + LangChain + LangGraph + Groq
 
 Production-style RAG project that moves from local FAISS to cloud Postgres (Supabase) with AI Agent search. Built on a slow laptop and Colab.
 
@@ -7,7 +7,7 @@ Two main scripts:
 1. **Insert Records** - Takes employee data, creates HuggingFace embeddings (384-dim), stores in Supabase Postgres using pgvector extension
 2. **AI Agent Search** - LangGraph agent that retrieves from pgvector and answers using Groq Llama 3.1 8B. Uses PostgresSaver for chat memory + interactive prompt in terminal/Colab.
 
-Live table proof: `langchain_pg_embedding` with `embedding vector` and `document varchar` columns (see screenshot).
+Live table proof: `langchain_pg_embedding` with `embedding vector` and `document varchar` columns.
 
 ## Architecture
 ```
@@ -33,6 +33,7 @@ Employee Docs (Raj, Amit, Anjali)
 .
 ├── 1_insert_to_supabase.py      # Insert 3 employees to Supabase
 ├── 2_langgraph_groq_agent.py    # AI Agent with user prompt loop
+├── requirements.txt
 └── README.md
 ```
 
@@ -131,7 +132,7 @@ with PostgresSaver.from_conn_string(POOLER_URI) as checkpointer:
 4. **FAISS vs pgvector**
    FAISS = file on laptop, lost on restart. pgvector = permanent in Postgres cloud.
 
-## Learning Key Points
+## Key Points
 - How to enable pgvector with `CREATE EXTENSION vector`
 - Difference between Supabase Direct vs Pooler for Colab
 - How to store embeddings and metadata in `langchain_pg_embedding`
@@ -142,8 +143,35 @@ with PostgresSaver.from_conn_string(POOLER_URI) as checkpointer:
 ## Resume Line
 "Built production RAG using Postgres (Supabase) + pgvector for vector storage, Groq Llama 3.1 for generation, and LangGraph with Postgres checkpointer for memory."
 
+## FastAPI Extension (New)
+
+### Additional Files
+- **app.py** : API creation file - Creates FastAPI server with Postgres vector search and direct Groq client. Avoids `langchain_groq` to fix `pydantic_v1` error. Endpoint `/ask` with `x-api-key` protection.
+- **callapi.py** : For normal calling of API - Single request test
+- **callapi2.py** : For next calling of API - Continuous chat loop via API
+
+### How to Run API
+**Terminal 1 (keep running):**
+```bash
+python -m uvicorn app:app --reload
+```
+
+**Terminal 2:**
+```bash
+python callapi.py
+# or
+python callapi2.py
+```
+
+### Why direct Groq client?
+`langchain_groq` fails with `ModuleNotFoundError: No module named 'langchain_core.pydantic_v1'` on latest langchain versions. Solution: use `from groq import Groq` directly, works without venv.
+
+Install fix:
+```bash
+python -m pip install groq psycopg langchain-huggingface langchain-postgres
+```
+
 ## Future Improvements
-- Add FastAPI wrapper for agent
 - Add Streamlit UI
 - Add HNSW index tuning for faster search
 - Add RLS enabled for production
