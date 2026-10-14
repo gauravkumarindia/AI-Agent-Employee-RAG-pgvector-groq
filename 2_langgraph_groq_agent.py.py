@@ -9,7 +9,7 @@ from typing import TypedDict
 GROQ_API_KEY = getpass("Enter your Groq API key (gsk_...): ")
 DB_PASSWORD = getpass("Enter your Supabase DB password: ")
 
-POOLER_URI = f"postgresql://postgres.xxxxx:{DB_PASSWORD}@aws-0-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require"
+POOLER_URI = f"postgresql://postgres.xxxxx/postgres?sslmode=require"
 VECTOR_URI = POOLER_URI.replace("postgresql://", "postgresql+psycopg://")
 
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
